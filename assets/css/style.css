@@ -1,0 +1,52 @@
+:root{
+    --background: rgb(95, 8, 95);
+}
+
+
+header{
+    padding: 10px 5px;
+    font-weight: bold;
+}
+
+header a{
+    display: inline-block;
+    color: var(--background);
+    text-decoration: none;
+
+}
+
+header p{
+    float: right;
+}
+
+.box{
+    padding-top: 50px;
+}
+
+h2{
+    font-size: 1.7rem;
+}
+
+#question{
+    text-align: center;
+
+}
+
+#instructions{
+    padding-top: 20px;
+    padding-left: 30%;
+    padding-right: 30%;
+    text-align: center;
+}
+
+button{
+    background-color: var(--background);
+    color: white;
+    padding: 3px 6px;
+}
+
+#start{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
