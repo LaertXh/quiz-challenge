@@ -27,16 +27,31 @@ h2{
     font-size: 1.7rem;
 }
 
-#question{
+#intro-question{
     text-align: center;
 
 }
+#quiz-question{
+    padding-left: 30%;
+    padding-bottom: 15px;
+}
 
-#instructions{
+.instructions-show{
+    display: block;
     padding-top: 20px;
     padding-left: 30%;
     padding-right: 30%;
     text-align: center;
+}
+
+.instructions-hide{
+    display: none;
+}
+
+.end-screen{
+    text-align: left;
+    padding-left: 30%;
+    padding-bottom: 20px;
 }
 
 button{
@@ -45,8 +60,18 @@ button{
     padding: 3px 6px;
 }
 
-#start{
-    margin-top: 20px;
+.start-box-show{
     display: flex;
     justify-content: center;
+    margin-top: 20px;
+}
+
+.start-box-hide{
+    display: none;
+}
+
+/* gets added by javascript to the li elements*/
+.choices-list{
+    padding-left: 30%;
+    margin-top: 5px;
 }
