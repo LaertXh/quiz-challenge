@@ -4,6 +4,8 @@ var questionEl = document.querySelector('.question');
 var instructionsEl = document.querySelector('.instructions');
 var choicesEl = document.querySelector('.choices');
 var formEl = document.querySelector(".submit-form");
+var submitEl = document.querySelector('#submit');
+var initialsInputEl = document.querySelector("#initials-input");
 var choicesButtonsEl = [];
 
 
@@ -61,6 +63,8 @@ var challenges = [
 var currentQuestion = 0; // the location of the current question in the array
 var score = 0; //user points
 var time = 90; 
+var userInitials = localStorage.getItem('initials') || '';
+var userScores = localStorage.getItem('scores') || '';
 
 
 
@@ -155,6 +159,34 @@ function scoreRecordScreen(){
 
 }
 
+function submitButton(event){
+    event.preventDefault();
+    
+    //users input
+    var updatedLocal = '';
+    var updatedScores = '';
+    var userInput = initialsInputEl.value;
+    if(userInitials === ''){
+        updatedLocal = userInput;
+        updatedScores = score;
+    }else{
+        updatedLocal = userInitials +  "-" + userInput;
+        updatedScores = userScores + '-' + score;
+    }
+
+     
+    
+    //if user didnt place the initials then place N/A for initials 
+    if(userInput === ""){
+        localStorage.setItem('initials', (updatedLocal + "N/A"));
+        localStorage.setItem('scores', updatedScores);
+    }
+    //user inputted a value therefore record it 
+    else{
+        localStorage.setItem('initials', updatedLocal);
+        localStorage.setItem('scores', updatedScores)
+    }
+}
 
 
 
@@ -164,6 +196,7 @@ function scoreRecordScreen(){
 startButtonEl.addEventListener('click', startButton);
 // a user clicks a choice -- listeners were added in the build li function where the buttons are being created 
 // a user inputs initials and saves they report
+submitEl.addEventListener('click', submitButton)
 // a user can see high scores
 
 
