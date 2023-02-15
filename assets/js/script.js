@@ -7,6 +7,9 @@ var formEl = document.querySelector(".submit-form");
 var submitEl = document.querySelector('#submit');
 var initialsInputEl = document.querySelector("#initials-input");
 var scoreboardEl = document.querySelector('#scoreboard');
+var scoreboardButtonsEl = document.querySelector("#scoreboard-buttons");
+var clearScoreboardButtonEl = document.querySelector('#clear-scoreboard-button');
+var backButtonEl = document.querySelector('#back-button');
 var choicesButtonsEl = [];
 
 
@@ -75,7 +78,7 @@ var initialsList = [];
 //FUNCTIONS =========================================================================
 
 //the quiz will kick off
-function startButton(){
+function startListener(){
     //create the proper html structure to place questions
     //create the list for our choices
     buildLi();
@@ -103,7 +106,7 @@ function buildLi(){
         liEl.appendChild(buttonEl);
         choicesEl.appendChild(liEl);
 
-        buttonEl.addEventListener('click', choicesButton);
+        buttonEl.addEventListener('click', choicesListener);
 
         //change the question css
         questionEl.setAttribute('id', 'quiz-question');
@@ -126,7 +129,7 @@ function nextQuestion(){
 }
 
 //when the user clicks one of the question's choices this will occur
-function choicesButton(event){
+function choicesListener(event){
     //check weather the answer is correct 
     var usersChoice = event.target.innerHTML;
     if(usersChoice === challenges[currentQuestion-1].correct){
@@ -162,7 +165,7 @@ function scoreRecordScreen(){
 
 }
 
-function submitButton(event){
+function submitListener(event){
     event.preventDefault();
     
     //users input
@@ -211,7 +214,7 @@ function scoreboard(){
     instructionsEl.setAttribute('class', 'instructions instructions-hide end-screen');
     formEl.setAttribute('id', 'hide-form');
 
-    //create li element and append to the parent
+    //create li element and append to the parent to build the scoreboard
     for(var i = scoreList.length - 1; i >= 0; i--){
         
         var liEl = document.createElement('li');
@@ -220,8 +223,8 @@ function scoreboard(){
         scoreboardEl.appendChild(liEl);
     }
 
-
-
+    //display the 'clear' and 'back' buttons
+    scoreboardButtonsEl.setAttribute('class', 'scoreboard-buttons-show');
 
 }
 
@@ -250,14 +253,21 @@ function bblSort(){
     }
 }
 
+function clearScoreboardListener(){
+
+    
+
+    localStorage.clear();
+}
 
 // USER INTERACTIONS ================================================================
 // a user clicks start
-startButtonEl.addEventListener('click', startButton);
+startButtonEl.addEventListener('click', startListener);
 // a user clicks a choice -- listeners were added in the build li function where the buttons are being created 
 // a user inputs initials and saves they report
-submitEl.addEventListener('click', submitButton)
-// a user can see high scores
+submitEl.addEventListener('click', submitListener)
+// a user can click 'clear scoreboard' and the scoreboard will be reset
+clearScoreboardButtonEl.addEventListener('click', clearScoreboardListener)
 
 
 
