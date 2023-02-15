@@ -2,9 +2,9 @@
 var startButtonEl = document.querySelector('#start-button');
 var questionEl = document.querySelector('.question');
 var instructionsEl = document.querySelector('.instructions');
-var choicesEl = document.querySelector('#choices');
+var choicesEl = document.querySelector('.choices');
+var formEl = document.querySelector(".submit-form");
 var choicesButtonsEl = [];
-
 
 
 
@@ -143,10 +143,15 @@ function choicesButton(event){
 
 //end of game screen
 function scoreRecordScreen(){
+    //display the appropriate text for the end of the game
     questionEl.textContent = "All Done!";
     instructionsEl.textContent = "Your final score is " + score;
-    instructionsEl.setAttribute('class', 'instructions instructions-show end-screen')
+    instructionsEl.setAttribute('class', 'instructions instructions-show end-screen');
 
+    //hide the buttons
+    choicesEl.setAttribute('id', 'choices-hide');
+    //display the form element
+    formEl.setAttribute('id', 'show-form');
 
 }
 

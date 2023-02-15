@@ -47,11 +47,23 @@ h2{
 .instructions-hide{
     display: none;
 }
-
+/* this is for instructions to adjust to the end screen */
 .end-screen{
     text-align: left;
     padding-left: 30%;
     padding-bottom: 20px;
+}
+
+.submit-form{
+    padding-left: 30%;
+}
+
+#show-form{
+    display: block;
+}
+
+#hide-form{
+    display: none;
 }
 
 button{
@@ -67,6 +79,14 @@ button{
 }
 
 .start-box-hide{
+    display: none;
+}
+
+#choices-show{
+    display: block;
+}
+
+#choices-hide{
     display: none;
 }
 
