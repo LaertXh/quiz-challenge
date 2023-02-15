@@ -6,6 +6,7 @@ var choicesEl = document.querySelector('.choices');
 var formEl = document.querySelector(".submit-form");
 var submitEl = document.querySelector('#submit');
 var initialsInputEl = document.querySelector("#initials-input");
+var scoreboardEl = document.querySelector('#scoreboard');
 var choicesButtonsEl = [];
 
 
@@ -15,48 +16,48 @@ var choicesButtonsEl = [];
 //challenges will hold a questions and its choices followed by the correct answer
 var challenges = [
     {
-        question: "Question 1 right answer C",
-        a: "Option A",
-        b: "Option B",
-        c: "Option C",
-        d: "Option D",
-        correct: "Option C"
+        question: "Commonly used data types DO NOT include:",
+        a: "1. strings",
+        b: "2. booleans",
+        c: "3. alerts",
+        d: "4. numbers",
+        correct: "3. alerts"
     },
 
     {
-        question: "Question 2 right answer D",
-        a: "Option A",
-        b: "Option B",
-        c: "Option C",
-        d: "Option D",
-        correct: "Option D"
+        question: "The condition in an if / else statement is enclosed with ______.",
+        a: "1. quotes",
+        b: "2. curly brackets",
+        c: "3. parenthesis",
+        d: "4. square brackets",
+        correct: "2. curly brackets"
     },
 
     {
-        question: "Question 3 right answer A",
-        a: "Option A",
-        b: "Option B",
-        c: "Option C",
-        d: "Option D",
-        correct: "Option A"
+        question: "String values must be enclosed within _____ when being assigned to variables.",
+        a: "1. commas",
+        b: "2. curly brackets",
+        c: "3. quotes",
+        d: "4. parenthesis",
+        correct: "3. quotes"
     },
 
     {
-        question: "Question 4 right answer C",
-        a: "Option A",
-        b: "Option B",
-        c: "Option C",
-        d: "Option D",
-        correct: "Option C"
+        question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        a: "1. JavaScript",
+        b: "2. terminal/bash",
+        c: "3. for loops",
+        d: "4. console.log",
+        correct: "4. console.log"
     },
 
     {
-        question: "Question 5 right answer C",
-        a: "Option A",
-        b: "Option B",
-        c: "Option C",
-        d: "Option D",
-        correct: "Option C"
+        question: "Arrays in JavaScript can be used to store _____.",
+        a: "1. numbers and strings",
+        b: "2. other arrays",
+        c: "3. booleans",
+        d: "4. all the above",
+        correct: "4. all the above"
     }
 ];
 
@@ -65,6 +66,8 @@ var score = 0; //user points
 var time = 90; 
 var userInitials = localStorage.getItem('initials') || '';
 var userScores = localStorage.getItem('scores') || '';
+var scoreList = [];
+var initialsList = [];
 
 
 
@@ -176,7 +179,7 @@ function submitButton(event){
 
      
     
-    //if user didnt place the initials then place N/A for initials 
+    //if user didn't place the initials then place N/A for initials 
     if(userInput === ""){
         localStorage.setItem('initials', (updatedLocal + "N/A"));
         localStorage.setItem('scores', updatedScores);
@@ -186,9 +189,66 @@ function submitButton(event){
         localStorage.setItem('initials', updatedLocal);
         localStorage.setItem('scores', updatedScores)
     }
+
+    //local storage is updated, now show the scoreboard
+    scoreboard();
 }
 
+//the end-screen of the quiz displaying the scoreboard
+function scoreboard(){
+    //get the locally stored data into arrays
+    scoreList = userScores.split('-');
+    initialsList = userInitials.split('-');
+    //turn strings to numbers to sort
+    for (var i = 0; i < scoreList.length; i++){
+        scoreList[i] = +(scoreList[i]);
+    }
 
+    //reorder the list so we can display it from highest to lowest
+    bblSort();
+
+    questionEl.textContent = "Scoreboard";
+    instructionsEl.setAttribute('class', 'instructions instructions-hide end-screen');
+    formEl.setAttribute('id', 'hide-form');
+
+    //create li element and append to the parent
+    for(var i = scoreList.length - 1; i >= 0; i--){
+        
+        var liEl = document.createElement('li');
+        liEl.setAttribute('class', 'scoreboard-li');
+        liEl.textContent = initialsList[i] + " - " + scoreList[i];
+        scoreboardEl.appendChild(liEl);
+    }
+
+
+
+
+}
+
+// bubble sort to sort the score data -- taken from geeksforgeeks
+function bblSort(){
+    
+    for(var i = 0; i < scoreList.length; i++){
+       
+      // Last i elements are already in place 
+      for(var j = 0; j < ( scoreList.length - i -1 ); j++){
+         
+        // Checking if the item at present iteration
+        // is greater than the next iteration
+        if(scoreList[j] > scoreList[j+1]){
+           
+            // If the condition is true then swap them
+            var temp = scoreList[j];
+            scoreList[j] = scoreList[j + 1];
+            scoreList[j+1] = temp;
+
+            temp = initialsList[j];
+            initialsList[j] = initialsList[j + 1];
+            initialsList[j+1] = temp;
+        }
+      }
+    }
+}
 
 
 // USER INTERACTIONS ================================================================

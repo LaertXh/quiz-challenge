@@ -57,6 +57,16 @@ h2{
 .submit-form{
     padding-left: 30%;
 }
+#scoreboard{
+    margin-left: 30%;
+    margin-right: 40%;
+}
+.scoreboard-li{
+    margin: 3px;
+    padding: 5px;
+    background-color: var(--background);
+    color: white;;
+}
 
 #show-form{
     display: block;
