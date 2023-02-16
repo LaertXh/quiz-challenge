@@ -1,4 +1,6 @@
 // DEPENDENCIES =====================================================================
+var timeEl = document.querySelector('#time');
+var timeBoxEl = document.querySelector('#time-box');
 var startButtonEl = document.querySelector('#start-button');
 var questionEl = document.querySelector('.question');
 var instructionsEl = document.querySelector('.instructions');
@@ -65,19 +67,42 @@ var challenges = [
 
 var currentQuestion = 0; // the location of the current question in the array
 var score = 0; //user points
-var time = 90; 
+var time = 75; 
 var userInitials = localStorage.getItem('initials') || '';
 var userScores = localStorage.getItem('scores') || '';
 var scoreList = [];
 var initialsList = [];
+var timeInterval;
 
 
 
 
 //FUNCTIONS =========================================================================
 
+function setTime() {
+    timeBoxEl.setAttribute('class', 'time-show');
+
+    //sets interval in variable
+    timeInterval = setInterval(function () {
+        time--;
+        timeEl.textContent = time;
+
+        if(time === 0){
+            timeBoxEl.setAttribute('class', 'time-hide');
+            clearInterval(timeInterval);
+
+            //game over go to the scoreboard
+            scoreRecordScreen();
+        }
+
+    }, 1000);
+}
+
 //the quiz will kick off
 function startListener(){
+    //start time
+    setTime();
+
     //create the proper html structure to place questions
     //create the list for our choices
     buildLi();
@@ -137,7 +162,7 @@ function choicesListener(event){
     }
     //if user input is wrong then decrease time by 10 seconds
     else{
-        time -= 10;
+        time -= 15;
     }
     //if not on the last question then go to next question
     if(currentQuestion != challenges.length){
@@ -146,6 +171,11 @@ function choicesListener(event){
     //else the quiz has ended
     else{
         //go to the score record screen
+
+        timeBoxEl.setAttribute('class', 'time-hide');
+        clearInterval(timeInterval);
+
+        //game over go to the scoreboard
         scoreRecordScreen();
     }
 }
