@@ -12,6 +12,8 @@ var scoreboardEl = document.querySelector('#scoreboard');
 var scoreboardButtonsEl = document.querySelector("#scoreboard-buttons");
 var clearScoreboardButtonEl = document.querySelector('#clear-scoreboard-button');
 var backButtonEl = document.querySelector('#back-button');
+var wrongEl = document.querySelector('#wrong');
+var correctEl = document.querySelector('#correct');
 var choicesButtonsEl = [];
 
 
@@ -73,6 +75,7 @@ var userScores = localStorage.getItem('scores') || '';
 var scoreList = [];
 var initialsList = [];
 var timeInterval;
+var feedbackTimeInterval;
 
 
 
@@ -98,6 +101,29 @@ function setTime() {
     }, 1000);
 }
 
+//if user picks wrong answer display 'Wong' for 2 second
+// if user picks correct then display 'correct' for 2 seconds
+function feedbackTime(currentEl){
+    
+    clearInterval(feedbackTimeInterval);
+    
+    currentEl.setAttribute('class', 'feedback-show');
+
+    var feedbackTime = 1;
+    feedbackTimeInterval = setInterval(function () {
+        feedbackTime--;
+
+        if(feedbackTime === 0){
+            currentEl.setAttribute('class', 'feedback-hide');
+            clearInterval(feedbackTimeInterval);
+
+        }
+
+
+    }, 1000);
+}
+
+
 //the quiz will kick off
 function startListener(){
     //start time
@@ -115,7 +141,6 @@ function startListener(){
     nextQuestion();
 
 }
-
 
 //add the li elements to the ul element
 function buildLi(){
@@ -159,10 +184,18 @@ function choicesListener(event){
     if(usersChoice === challenges[currentQuestion-1].correct){
         //if true increase users score
         score++;
+        //show correct text 
+        wrongEl.setAttribute('class', 'feedback-hide');
+        correctEl.setAttribute('class', 'feedback-hide');
+        feedbackTime(correctEl);
     }
     //if user input is wrong then decrease time by 10 seconds
     else{
         time -= 15;
+        //show wrong text
+        wrongEl.setAttribute('class', 'feedback-hide');
+        correctEl.setAttribute('class', 'feedback-hide');
+        feedbackTime(wrongEl);
     }
     //if not on the last question then go to next question
     if(currentQuestion != challenges.length){
@@ -171,7 +204,6 @@ function choicesListener(event){
     //else the quiz has ended
     else{
         //go to the score record screen
-
         timeBoxEl.setAttribute('class', 'time-hide');
         clearInterval(timeInterval);
 

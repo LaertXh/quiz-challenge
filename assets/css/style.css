@@ -137,3 +137,18 @@ button{
     padding-left: 30%;
     margin-top: 5px;
 }
+
+.feedback-hide{
+    display: none;
+}
+
+.feedback-show{
+    margin-top: 15px;
+    margin-left: 30%;
+    margin-right: 30%;
+    font-size: 1.2rem;
+    font-style: oblique;
+
+}
+
+
