@@ -179,8 +179,7 @@ function submitListener(event){
         updatedLocal = userInitials +  "-" + userInput;
         updatedScores = userScores + '-' + score;
     }
-
-     
+    
     
     //if user didn't place the initials then place N/A for initials 
     if(userInput === ""){
@@ -192,6 +191,9 @@ function submitListener(event){
         localStorage.setItem('initials', updatedLocal);
         localStorage.setItem('scores', updatedScores)
     }
+    
+    userInitials = localStorage.getItem('initials');
+    userScores = localStorage.getItem('scores');
 
     //local storage is updated, now show the scoreboard
     scoreboard();
@@ -202,11 +204,11 @@ function scoreboard(){
     //get the locally stored data into arrays
     scoreList = userScores.split('-');
     initialsList = userInitials.split('-');
+    console.log(initialsList)
     //turn strings to numbers to sort
     for (var i = 0; i < scoreList.length; i++){
         scoreList[i] = +(scoreList[i]);
     }
-
     //reorder the list so we can display it from highest to lowest
     bblSort();
 
@@ -252,12 +254,16 @@ function bblSort(){
       }
     }
 }
-
+//clears the scoreboard 
 function clearScoreboardListener(){
 
-    
+    scoreboardEl.remove();
 
     localStorage.clear();
+}
+//refreshes the page
+function backListener(){
+    location.reload();
 }
 
 // USER INTERACTIONS ================================================================
@@ -267,7 +273,9 @@ startButtonEl.addEventListener('click', startListener);
 // a user inputs initials and saves they report
 submitEl.addEventListener('click', submitListener)
 // a user can click 'clear scoreboard' and the scoreboard will be reset
-clearScoreboardButtonEl.addEventListener('click', clearScoreboardListener)
+clearScoreboardButtonEl.addEventListener('click', clearScoreboardListener);
+//user can go back to main page
+backButtonEl.addEventListener('click', backListener);
 
 
 
