@@ -14,7 +14,6 @@ var choicesButtonsEl = [];
 
 
 
-
 // DATA =============================================================================
 //challenges will hold a questions and its choices followed by the correct answer
 var challenges = [
@@ -204,7 +203,6 @@ function scoreboard(){
     //get the locally stored data into arrays
     scoreList = userScores.split('-');
     initialsList = userInitials.split('-');
-    console.log(initialsList)
     //turn strings to numbers to sort
     for (var i = 0; i < scoreList.length; i++){
         scoreList[i] = +(scoreList[i]);
@@ -212,16 +210,34 @@ function scoreboard(){
     //reorder the list so we can display it from highest to lowest
     bblSort();
 
+    //place the updated data back to the local storage since its sorted
+    userScores = '';
+    userInitials = '';
+    for(var i = 0; i < scoreList.length; i++){
+        if(i === 0){
+            userInitials = initialsList[i];
+            userScores = scoreList[i];
+        }
+        else{
+            userInitials = userInitials + "-" + initialsList[i];
+            userScores = userScores + '-' + scoreList[i];
+        }
+    }
+    localStorage.setItem('initials', userInitials);
+    localStorage.setItem('scores', userScores);
+
+
     questionEl.textContent = "Scoreboard";
     instructionsEl.setAttribute('class', 'instructions instructions-hide end-screen');
     formEl.setAttribute('id', 'hide-form');
+
 
     //create li element and append to the parent to build the scoreboard
     for(var i = scoreList.length - 1; i >= 0; i--){
         
         var liEl = document.createElement('li');
         liEl.setAttribute('class', 'scoreboard-li');
-        liEl.textContent = initialsList[i] + " - " + scoreList[i];
+        liEl.textContent = scoreList.length-(i) + ". " + initialsList[i] + " - " + scoreList[i];
         scoreboardEl.appendChild(liEl);
     }
 
@@ -256,10 +272,10 @@ function bblSort(){
 }
 //clears the scoreboard 
 function clearScoreboardListener(){
+    
+    localStorage.clear();
 
     scoreboardEl.remove();
-
-    localStorage.clear();
 }
 //refreshes the page
 function backListener(){
@@ -276,6 +292,9 @@ submitEl.addEventListener('click', submitListener)
 clearScoreboardButtonEl.addEventListener('click', clearScoreboardListener);
 //user can go back to main page
 backButtonEl.addEventListener('click', backListener);
+
+//user can click to view scoreboard at any time
+
 
 
 
